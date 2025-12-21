@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -15,7 +16,7 @@ import java.io.Serializable;
 @Table(name = "customer")
 public class CustomerEntity implements Serializable {
 
-
+    @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +24,9 @@ public class CustomerEntity implements Serializable {
     private Integer idCustomer;
     @Column(name = "full_name")
     private String fullName;
+
+    public CustomerEntity(String fullName) {
+        this.fullName = fullName;
+    }
+
 }

@@ -10,6 +10,7 @@ public interface AccountService {
 
 	Observable<Account> findAll();
 	Single<Account> findById (Integer id );
-	Completable save (Transaction event);
-	
+	Completable save (Account account);
+	Completable saveTransaction (Transaction event);
+
 }

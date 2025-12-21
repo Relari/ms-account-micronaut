@@ -34,9 +34,16 @@ public class AccountDaoImpl implements AccountDao {
     }
 
     @Override
+    public Completable update(Account account) {
+        return Single.fromCallable(() -> AccountMapper.mapAccountEntity(account))
+                .map(accountRepository::update)
+                .subscribeOn(Schedulers.io())
+                .ignoreElement();
+    }
+
+    @Override
     public Single<Account> findById(Integer id) {
-        return Single.fromCallable(() ->
-                accountRepository.findById(id).orElse(null))
+        return Single.fromCallable(() -> accountRepository.findById(id).orElse(null))
                 .subscribeOn(Schedulers.io())
                 .map(AccountMapper::mapAccount);
     }

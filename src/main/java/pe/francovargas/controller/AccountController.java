@@ -1,12 +1,15 @@
 package pe.francovargas.controller;
 
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.*;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import lombok.AllArgsConstructor;
+import pe.francovargas.model.api.AccountRequest;
 import pe.francovargas.model.api.AccountResponse;
+import pe.francovargas.model.api.TransactionRequest;
+import pe.francovargas.model.domain.Account;
+import pe.francovargas.model.domain.Transaction;
 import pe.francovargas.service.AccountService;
 
 
@@ -28,4 +31,15 @@ public class AccountController {
 				.map(AccountResponse::new);
 	}
 
+	@Post("/transactions")
+	public Completable registerTransaction(@Body TransactionRequest request) {
+		return Single.fromCallable(() -> new Transaction(request))
+				.flatMapCompletable(service::saveTransaction);
+	}
+
+	@Post
+	public Completable save(@Body AccountRequest request) {
+		return Single.fromCallable(() -> new Account(request, request.getIdCustomer()))
+				.flatMapCompletable(service::save);
+	}
 }

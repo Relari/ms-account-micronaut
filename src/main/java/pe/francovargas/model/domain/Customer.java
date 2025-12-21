@@ -14,4 +14,12 @@ public class Customer {
     private Integer idCustomer;
     private String fullName;
 
+    public Customer(Integer idCustomer) {
+        this.idCustomer = idCustomer;
+    }
+
+    public Customer(String fullName) {
+        this.fullName = fullName;
+    }
+
 }

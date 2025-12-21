@@ -9,8 +9,10 @@ public interface AccountDao {
 
     Observable<Account> findAll();
 
-    Completable save(Account accountEntity);
-
     Single<Account> findById(Integer id);
+
+    Completable save(Account account);
+
+    Completable update(Account account);
 
 }

@@ -8,6 +8,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @Table(name="account")
 public class AccountEntity implements Serializable {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,7 @@ public class AccountEntity implements Serializable {
 	@Column(name="total_amount")
 	private double totalAmount ;
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="id_customer" , insertable =false , updatable = false)
+	@JoinColumn(name="id_customer" , referencedColumnName = "id_customer", nullable = false)
 	@Fetch(FetchMode.JOIN)
 	private CustomerEntity customer;
 
