@@ -7,9 +7,10 @@ import io.reactivex.Single;
 import lombok.AllArgsConstructor;
 import pe.francovargas.model.api.CustomerRequest;
 import pe.francovargas.model.api.CustomerResponse;
+import pe.francovargas.model.domain.Customer;
 import pe.francovargas.service.CustomerService;
 
-@Controller("/v1/customers")
+@Controller(value = "/v1/customers")
 @AllArgsConstructor
 public class CustomerController {
 
@@ -24,7 +25,8 @@ public class CustomerController {
 
     @Post
     public Completable createCustomer(@Body CustomerRequest request) {
-        return service.save(request.getFullName());
+        return Single.fromCallable(() -> new Customer(request))
+                .flatMapCompletable(service::save);
     }
 
     @Put("/{idCustomer}")

@@ -7,9 +7,7 @@ import io.reactivex.Single;
 import lombok.AllArgsConstructor;
 import pe.francovargas.model.api.AccountRequest;
 import pe.francovargas.model.api.AccountResponse;
-import pe.francovargas.model.api.TransactionRequest;
 import pe.francovargas.model.domain.Account;
-import pe.francovargas.model.domain.Transaction;
 import pe.francovargas.service.AccountService;
 
 
@@ -29,12 +27,6 @@ public class AccountController {
 	public Single<AccountResponse> findById(@PathVariable Integer id) {
 		return service.findById(id)
 				.map(AccountResponse::new);
-	}
-
-	@Post("/transactions")
-	public Completable registerTransaction(@Body TransactionRequest request) {
-		return Single.fromCallable(() -> new Transaction(request))
-				.flatMapCompletable(service::saveTransaction);
 	}
 
 	@Post

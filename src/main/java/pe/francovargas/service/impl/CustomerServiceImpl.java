@@ -16,10 +16,8 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerDao customerDao;
 
     @Override
-    public Completable save(String fullName) {
-        return Single.fromCallable(() -> new Customer(fullName))
-                .map(customerDao::save)
-                .ignoreElement();
+    public Completable save(Customer customer) {
+        return customerDao.save(customer);
     }
 
     @Override

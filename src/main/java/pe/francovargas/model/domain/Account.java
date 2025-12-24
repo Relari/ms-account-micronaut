@@ -13,10 +13,12 @@ public class Account {
 
     private Integer idAccount;
     private double totalAmount;
+    private Currency currency;
     private Customer customer;
 
     public Account(AccountRequest request, Integer idCustomer) {
         this.totalAmount = request.getAmount();
+        this.currency = Currency.valueOf(request.getCurrency());
         this.customer = new Customer(idCustomer);
     }
 

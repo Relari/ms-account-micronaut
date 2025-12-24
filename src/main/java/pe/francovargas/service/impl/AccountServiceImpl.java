@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import pe.francovargas.dao.AccountDao;
 import pe.francovargas.dao.CustomerDao;
 import pe.francovargas.model.domain.Account;
-import pe.francovargas.model.domain.Transaction;
 import pe.francovargas.service.AccountService;
 
 @Singleton
@@ -35,21 +34,6 @@ public class AccountServiceImpl implements AccountService {
 					account.setCustomer(customer);
 					return accountDao.save(account);
 				});
-	}
-
-	@Override
-	public Completable saveTransaction(Transaction transaction) {
-		return accountDao.findById(transaction.getAccountId())
-				.map(account -> {
-					double newAmount = switch (transaction.getType()) {
-                        case "deposit" -> account.getTotalAmount() + transaction.getAmount();
-                        case "withdrawal" -> account.getTotalAmount() - transaction.getAmount();
-                        default -> 0;
-                    };
-
-                    account.setTotalAmount(newAmount);
-					return account;
-				}).flatMapCompletable(accountDao::update);
 	}
 
 }

@@ -21,15 +21,12 @@ public class CustomerDaoImpl implements CustomerDao {
     public Observable<Customer> findAll() {
         return Observable.fromIterable(customerRepository.findAll())
                 .subscribeOn(Schedulers.io())
-                .map(customerEntity -> new Customer(
-                        customerEntity.getIdCustomer(),
-                        customerEntity.getFullName()
-                ));
+                .map(Customer::new);
     }
 
     @Override
     public Completable save(Customer customer) {
-        return Single.fromCallable(() -> new CustomerEntity(customer.getIdCustomer(), customer.getFullName()))
+        return Single.fromCallable(() -> new CustomerEntity(customer))
                 .map(customerRepository::save)
                 .subscribeOn(Schedulers.io())
                 .ignoreElement();
@@ -37,7 +34,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
     @Override
     public Completable update(Customer customer) {
-        return Single.fromCallable(() -> new CustomerEntity(customer.getIdCustomer(), customer.getFullName()))
+        return Single.fromCallable(() -> new CustomerEntity(customer))
                 .map(customerRepository::update)
                 .subscribeOn(Schedulers.io())
                 .ignoreElement();
@@ -48,9 +45,6 @@ public class CustomerDaoImpl implements CustomerDao {
         return Single.fromCallable(() ->
                         customerRepository.findById(id).orElse(null))
                 .subscribeOn(Schedulers.io())
-                .map(customerEntity -> new Customer(
-                        customerEntity.getIdCustomer(),
-                        customerEntity.getFullName()
-                ));
+                .map(Customer::new);
     }
 }

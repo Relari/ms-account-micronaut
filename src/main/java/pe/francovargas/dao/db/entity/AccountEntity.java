@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import pe.francovargas.model.domain.Currency;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -27,6 +28,9 @@ public class AccountEntity implements Serializable {
 	private Integer idAccount ;
 	@Column(name="total_amount")
 	private double totalAmount ;
+	@Column(name="currency")
+	@Enumerated(EnumType.STRING)
+	private Currency currency ;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="id_customer" , referencedColumnName = "id_customer", nullable = false)
 	@Fetch(FetchMode.JOIN)

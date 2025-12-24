@@ -7,7 +7,7 @@ import pe.francovargas.model.domain.Customer;
 
 public interface CustomerService {
 
-    Completable save(String fullName);
+    Completable save(Customer customer);
     Completable update(Integer idCustomer, String fullName);
     Observable<Customer> findAll();
     Single<Customer> findById(Integer idCustomer);

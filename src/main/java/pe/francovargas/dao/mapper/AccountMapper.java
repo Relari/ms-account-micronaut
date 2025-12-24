@@ -13,10 +13,8 @@ public class AccountMapper {
         return Account.builder()
                 .idAccount(accountEntity.getIdAccount())
                 .totalAmount(accountEntity.getTotalAmount())
-                .customer(new Customer(
-                        accountEntity.getCustomer().getIdCustomer(),
-                        accountEntity.getCustomer().getFullName())
-                )
+                .currency(accountEntity.getCurrency())
+                .customer(new Customer(accountEntity.getCustomer()))
                 .build();
     }
 
@@ -24,10 +22,8 @@ public class AccountMapper {
         return AccountEntity.builder()
                 .idAccount(account.getIdAccount())
                 .totalAmount(account.getTotalAmount())
-                .customer(new CustomerEntity(
-                        account.getCustomer().getIdCustomer(),
-                        account.getCustomer().getFullName())
-                )
+                .currency(account.getCurrency())
+                .customer(new CustomerEntity(account.getCustomer()))
                 .build();
     }
 
